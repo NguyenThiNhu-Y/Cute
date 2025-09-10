@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mình hẹn hò nhé? 🌹</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff66b2, #ff99cc);
+      font-family: 'Quicksand', sans-serif;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .cute-img {
+      width: 150px;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+    .question {
+      font-size: 28px;
+      margin-bottom: 30px;
+      animation: shake 1s infinite;
+      z-index: 2;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      50% { transform: translateX(3px); }
+      75% { transform: translateX(-3px); }
+    }
+    .btn {
+      border: none;
+      padding: 15px 30px;
+      margin: 10px;
+      border-radius: 30px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform 0.3s, font-size 0.3s, left 0.3s, top 0.3s;
+      position: relative;
+      z-index: 2;
+    }
+    #yesBtn {
+      background: #4caf50;
+      color: white;
+    }
+    #noBtn {
+      background: #ddd;
+      color: #333;
+    }
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: fly 2s linear forwards;
+      z-index: 1;
+    }
+    @keyframes fly {
+      from { opacity: 1; transform: translateY(0) scale(1); }
+      to { opacity: 0; transform: translateY(-200px) scale(1.5); }
+    }
+    /* Tim rơi nền */
+    .falling-heart {
+      position: absolute;
+      top: -20px;
+      font-size: 20px;
+      animation: fall linear forwards;
+      opacity: 0.8;
+      z-index: 0;
+    }
+    @keyframes fall {
+      from { transform: translateY(0); }
+      to { transform: translateY(110vh); }
+    }
+  </style>
+</head>
+<body>
+  <img src="https://i.ibb.co/7JfqXxB/cute-cat.png" class="cute-img" alt="cute cat">
+  <div class="question">Mình hẹn hò nhé? 🌹</div>
+  <div>
+    <button id="yesBtn" class="btn">🥰 Oke</button>
+    <button id="noBtn" class="btn">😢 Nah</button>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    let yesSize = 1;
+    let noSize = 1;
+
+    // Nút Nah -> chạy trốn khi hover
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${noSize})`;
+    });
+
+    // Nút Nah -> nhỏ dần, nút Oke to ra
+    noBtn.addEventListener('click', () => {
+      noSize *= 0.8;
+      yesSize *= 1.2;
+      noBtn.style.transform = `scale(${noSize})`;
+      yesBtn.style.transform = `scale(${yesSize})`;
+    });
+
+    // Nút Oke -> hiện tim bay bay
+    yesBtn.addEventListener('click', () => {
+      for (let i = 0; i < 10; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerText = "💖";
+        document.body.appendChild(heart);
+
+        const x = Math.random() * window.innerWidth;
+        const y = window.innerHeight - 50;
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+
+        setTimeout(() => heart.remove(), 2000);
+      }
+      alert("Yayyyy 💖 Mình yêu nhau nhaaa!");
+    });
+
+    // Tạo tim rơi liên tục
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.classList.add('falling-heart');
+      heart.innerText = ["💖","💕","💓","💗","❤️"][Math.floor(Math.random()*5)];
+      document.body.appendChild(heart);
+
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+      // Xóa khi rơi xong
+      setTimeout(() => heart.remove(), 6000);
+    }, 500);
+  </script>
+</body>
+</html>

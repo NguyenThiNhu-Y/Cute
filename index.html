@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -19,10 +20,17 @@
       overflow: hidden;
       position: relative;
     }
-    .cute-img {
+    .cute-img, .huy-img {
       width: 150px;
       margin-bottom: 20px;
       z-index: 2;
+      border-radius: 50%;
+      border: 3px solid white;
+    }
+    .name {
+      font-size: 24px;
+      margin-bottom: 10px;
+      font-weight: bold;
     }
     .question {
       font-size: 28px;
@@ -65,7 +73,6 @@
       from { opacity: 1; transform: translateY(0) scale(1); }
       to { opacity: 0; transform: translateY(-200px) scale(1.5); }
     }
-    /* Tim rơi nền */
     .falling-heart {
       position: absolute;
       top: -20px;
@@ -82,6 +89,8 @@
 </head>
 <body>
   <img src="https://i.ibb.co/7JfqXxB/cute-cat.png" class="cute-img" alt="cute cat">
+  <div class="name">Huy Thịnh</div>
+  <img src="HuyThinh.png" class="huy-img" alt="Huy Thịnh">
   <div class="question">Mình hẹn hò nhé? 🌹</div>
   <div>
     <button id="yesBtn" class="btn">🥰 Oke</button>
@@ -94,22 +103,21 @@
     let yesSize = 1;
     let noSize = 1;
 
-    // Nút Nah -> chạy trốn khi hover
     noBtn.addEventListener('mouseover', () => {
       const x = Math.random() * 200 - 100;
       const y = Math.random() * 200 - 100;
       noBtn.style.transform = `translate(${x}px, ${y}px) scale(${noSize})`;
     });
 
-    // Nút Nah -> nhỏ dần, nút Oke to ra
     noBtn.addEventListener('click', () => {
+      const x = Math.random() * 300 - 150;
+      const y = Math.random() * 300 - 150;
+      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${noSize})`;
       noSize *= 0.8;
       yesSize *= 1.2;
-      noBtn.style.transform = `scale(${noSize})`;
       yesBtn.style.transform = `scale(${yesSize})`;
     });
 
-    // Nút Oke -> hiện tim bay bay
     yesBtn.addEventListener('click', () => {
       for (let i = 0; i < 10; i++) {
         const heart = document.createElement('div');
@@ -127,7 +135,6 @@
       alert("Yayyyy 💖 Mình yêu nhau nhaaa!");
     });
 
-    // Tạo tim rơi liên tục
     setInterval(() => {
       const heart = document.createElement('div');
       heart.classList.add('falling-heart');
@@ -138,7 +145,6 @@
       heart.style.fontSize = (Math.random() * 20 + 15) + "px";
       heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
 
-      // Xóa khi rơi xong
       setTimeout(() => heart.remove(), 6000);
     }, 500);
   </script>
